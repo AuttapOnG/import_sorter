@@ -53,10 +53,6 @@ ImportSortData sortImports(
         !isMultiLineString) {
       if (lines[i].contains('dart:')) {
         dartImports.add(lines[i]);
-      } else if (lines[i].contains('package:flutter/')) {
-        flutterImports.add(lines[i]);
-      } else if (lines[i].contains('package:$package_name/')) {
-        projectImports.add(lines[i]);
       } else if (lines[i].contains('package:')) {
         packageImports.add(lines[i]);
       } else {
