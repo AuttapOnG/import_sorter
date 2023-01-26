@@ -56,7 +56,7 @@ void main(List<String> args) {
       if (config.containsKey('emojis')) emojis = config['emojis'];
       if (config.containsKey('comments')) noComments = !config['comments'];
       if (config.containsKey('groupPackage'))
-        groupPackage = !config['groupPackage'];
+        groupPackage = config['groupPackage'];
       if (config.containsKey('ignored_files')) {
         ignored_files.addAll(config['ignored_files']);
       }
