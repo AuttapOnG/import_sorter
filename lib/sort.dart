@@ -55,7 +55,7 @@ ImportSortData sortImports(
       if (lines[i].contains('dart:')) {
         dartImports.add(lines[i]);
       } else if (lines[i].contains('package:')) {
-        if (groupPackage) {
+        if (!groupPackage) {
           packageImports.add(lines[i]);
         } else if (lines[i].contains('package:flutter/')) {
           flutterImports.add(lines[i]);
