@@ -10,7 +10,8 @@ ImportSortData sortImports(
   String package_name,
   bool emojis,
   bool exitIfChanged,
-  bool noComments, {
+  bool noComments,
+  bool groupPackage, {
   String? filePath,
 }) {
   String dartImportComment(bool emojis) =>
@@ -54,7 +55,15 @@ ImportSortData sortImports(
       if (lines[i].contains('dart:')) {
         dartImports.add(lines[i]);
       } else if (lines[i].contains('package:')) {
-        packageImports.add(lines[i]);
+        if (groupPackage) {
+          packageImports.add(lines[i]);
+        } else if (lines[i].contains('package:flutter/')) {
+          flutterImports.add(lines[i]);
+        } else if (lines[i].contains('package:$package_name/')) {
+          projectImports.add(lines[i]);
+        } else {
+          packageImports.add(lines[i]);
+        }
       } else {
         projectRelativeImports.add(lines[i]);
       }

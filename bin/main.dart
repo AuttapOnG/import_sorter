@@ -46,6 +46,7 @@ void main(List<String> args) {
 
   var emojis = false;
   var noComments = false;
+  var groupPackage = true;
   final ignored_files = [];
 
   // Reading from config in pubspec.yaml safely
@@ -54,6 +55,8 @@ void main(List<String> args) {
       final config = pubspecYaml['import_sorter'];
       if (config.containsKey('emojis')) emojis = config['emojis'];
       if (config.containsKey('comments')) noComments = !config['comments'];
+      if (config.containsKey('groupPackage'))
+        groupPackage = !config['groupPackage'];
       if (config.containsKey('ignored_files')) {
         ignored_files.addAll(config['ignored_files']);
       }
@@ -63,6 +66,7 @@ void main(List<String> args) {
   // Setting values from args
   if (!emojis) emojis = argResults.contains('-e');
   if (!noComments) noComments = argResults.contains('--no-comments');
+  if (!noComments) groupPackage = argResults.contains('--no-group-package');
   final exitOnChange = argResults.contains('--exit-if-changed');
 
   // Getting all the dart files for the project
@@ -95,8 +99,8 @@ void main(List<String> args) {
       continue;
     }
 
-    final sortedFile = sort.sortImports(
-        file.readAsLinesSync(), packageName, emojis, exitOnChange, noComments);
+    final sortedFile = sort.sortImports(file.readAsLinesSync(), packageName,
+        emojis, exitOnChange, noComments, groupPackage);
     if (!sortedFile.updated) {
       continue;
     }
